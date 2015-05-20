@@ -3,7 +3,23 @@
 #We can either drop file in the dir or create a path and read 
 Airlines = read.csv(file = "C:\\Users\\admin\\Desktop\\AirlineDelay.csv")
 
-#Data here is plit using indexes because dependent var is continous here.The sample.split function is typically used to split data with a categorical dependent variable
+#Reading directly from the csv
+Airlines = read.csv("AirlinesDelay.csv")
+
+#Use stringsAsFac=F if there are alot of text file to read
+Airlines = read.csv("AirlinesDelay.csv", stringsAsFactors=FALSE)
+
+#Open excel sheet, copy all the data and use clipboard to read data into R. Here data is separated by tabs (t).
+#Backslash will make sure R reads t as tab function rather than general function
+Airlines = read.table(file="clipboard", header=T, sep = "\t")
+
+#Reading data directly from a website
+Airlines = read.table("http://files.Airlinesgroup.org/datasets/AirlinesDelay/ml-100k/u.item", header=FALSE, sep="|", quote="\"")
+
+
+
+#########Splitting the data
+#Data here is split using indexes because dependent var is continous here.The sample.split function is typically used to split data with a categorical dependent variable
 spl = sample(nrow(Airlines), 0.7*nrow(Airlines))
 AirlinesTrain = Airlines[spl,]
 AirlinesTest = Airlines[-spl,]
