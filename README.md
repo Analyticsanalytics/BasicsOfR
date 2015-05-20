@@ -9,9 +9,11 @@ AirlinesTrain = Airlines[spl,]
 AirlinesTest = Airlines[-spl,]
 
 
-##Now Suppose dependent var is categorical, then we use split function
+#Now Suppose dependent var is categorical, then we use split function
 library(caTools)
 set.seed(3000)
 spl = sample.split(Airlines$TotalDelay, SplitRatio=0.7)
 AirlinesTrain = subset(Airlines, spl==TRUE)
 AirlinesTest = subset(Airlines, spl==FALSE)
+
+
