@@ -16,19 +16,23 @@ Airlines = read.table(file="clipboard", header=T, sep = "\t")
 #Reading data directly from a website
 Airlines = read.table("http://files.Airlinesgroup.org/datasets/AirlinesDelay/ml-100k/u.item", header=FALSE, sep="|", quote="\"")
 
-
-
 #########Splitting the data
 #Data here is split using indexes because dependent var is continous here.The sample.split function is typically used to split data with a categorical dependent variable
 spl = sample(nrow(Airlines), 0.7*nrow(Airlines))
 AirlinesTrain = Airlines[spl,]
 AirlinesTest = Airlines[-spl,]
 
+#Make a new var DelayClass variable whcih takes three different values: "No Delay", "Minor Delay", and "Major Delay". Create this variable, called "DelayClass", 
+#Note that a minor delay is a delay less than 30 minutes long, and a major delay is a delay at least 30 minutes long
+Airlines$DelayClass = factor(ifelse(Airlines$TotalDelay == 0, "No Delay", ifelse(Airlines$TotalDelay >= 30, "Major Delay", "Minor Delay")))
 
-#Now Suppose dependent var is categorical, then we use split function
+#Removing the existing depdent variable
+Airlines$TotalDelay = NULL
+
+#Now that dependent var (DelayClass) is categorical, we use split function
 library(caTools)
 set.seed(3000)
-spl = sample.split(Airlines$TotalDelay, SplitRatio=0.7)
+spl = sample.split(Airlines$DelayClass, SplitRatio=0.7)
 AirlinesTrain = subset(Airlines, spl==TRUE)
 AirlinesTest = subset(Airlines, spl==FALSE)
 
