@@ -22,18 +22,57 @@ spl = sample(nrow(Airlines), 0.7*nrow(Airlines))
 AirlinesTrain = Airlines[spl,]
 AirlinesTest = Airlines[-spl,]
 
-#Make a new var DelayClass variable whcih takes three different values: "No Delay", "Minor Delay", and "Major Delay". Create this variable, called "DelayClass", 
+#Making Linear Regression
+AirlinesLM = lm(TotalDelay ~ ., data=AirlinesTrain)
+summary(AirlinesLM)
+
+#Checking correlations
+cor(AirlinesTrain$NumPrevFlights, AirlinesTrain$PrevFlightGap)
+cor(AirlinesTrain$OriginAvgWind, AirlinesTrain$OriginWindGust)
+
+#Making prediction on the test set. Prediction fn has two args, the model and the new data
+predictTest = predict(AirlinesLM, newdata=AirlinesTest) 
+
+#Finding out SSE & SST
+SSE = sum((AirlinesTest$TotalDelay - predictTest)^2) #1st argument is actual value. 2nd argu is predicted value
+SST = sum((AirlinesTest$TotalDelay - mean(AirlinesTrain$TotalDelay))^2) #1st argu is actual value. 2nd argument is baseline or average price
+SSE
+SST
+
+#R S-quared
+1 - SSE/SST
+
+
+###############TURNING IT INTO CLASSIFICATION PROBLEM AND THEN SOLVE IT################################
+
+#Make a new var DelayClass variable (Using TotalDelay variable) whcih takes three different values: "No Delay", "Minor Delay", and "Major Delay". Create this variable, called "DelayClass", 
 #Note that a minor delay is a delay less than 30 minutes long, and a major delay is a delay at least 30 minutes long
 Airlines$DelayClass = factor(ifelse(Airlines$TotalDelay == 0, "No Delay", ifelse(Airlines$TotalDelay >= 30, "Major Delay", "Minor Delay")))
 
-#Removing the existing depdent variable
+#Removing the existing dependent variable
 Airlines$TotalDelay = NULL
 
-#Now that dependent var (DelayClass) is categorical, we use split function
+#Now use DelayClass as dependent var which is categorical, we use split function
 library(caTools)
 set.seed(3000)
 spl = sample.split(Airlines$DelayClass, SplitRatio=0.7)
 AirlinesTrain = subset(Airlines, spl==TRUE)
 AirlinesTest = subset(Airlines, spl==FALSE)
 
+#Now building a classification tree
+library(rpart)
+library(rpart.plot)
+AirlinesTree = rpart(DelayClass ~ ., data=AirlinesTrain, method="class")
+prp(AirlinesTree)
 
+#Prediction the training set
+AirlinesPred = predict(AirlinesTree, newdata=AirlinesTrain, type="class")
+
+#COnfusion matrix for training set
+table(AirlinesTrain$DelayClass, AirlinesPred)
+
+#Baseline Prediction
+table(AirlinesTrain$DelayClass)
+
+AirlinesPredTest = predict(AirlinesTree, newdata=AirlinesTest, type="class")
+table(AirlinesTest$DelayClass, AirlinesPredTest)
