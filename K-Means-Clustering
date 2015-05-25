@@ -1,0 +1,71 @@
+#K-Means Clustering
+Trips = read.csv(file = "C:\\Users\\admin\\Desktop\\Analytics Edge-2015\\Week10 Final Exam\\HubwayTrips.csv")
+names(Trips)
+summary(Trips$Duration)
+
+#average duration of trips taken on weekdays & non-weekdays
+tapply(Trips$Duration, Trips$Weekday, mean)
+
+
+#Normalizing the data using caret package. for each variable, the normalization process subtracts the mean and divides
+#by the standard deviation.In the normalized dataset, all of the variables should have mean 0 and standard deviation 1
+library(caret)
+preproc = preProcess(Trips)
+TripsNorm = predict(preproc, Trips)
+
+#Maximum value of trip duration in the normalized dataset
+max(TripsNorm$Duration)
+
+
+#Kmeans function takes three arguement, input we're trying to cluster (TripsNorm) here), no. of clusters(5 here) and
+#maximum no. of iterations. we've chosen 1000 iterations
+set.seed(5000)
+KMCTrips = kmeans(TripsNorm, centers=10, iter.max=1000)
+
+str(KMCTrips)
+#Here cluster variable shows the numbers assigned to cluster from 1-10
+#centers is basically mean intensity for all the 10 clusters like we found out using tapply in h-clusters
+#Size shows the no. of elements in clusters. As we can see 2nd cluster has highest 36,409 elements
+
+
+#ORR
+#No. of elements in each Clsuter
+table(KMCTrips$size)
+
+
+TripsKMC1 = subset(TripsNorm, KMCTrips$cluster == 1)
+TripsKMC2 = subset(TripsNorm, KMCTrips$cluster == 2)
+TripsKMC3 = subset(TripsNorm, KMCTrips$cluster == 3)
+TripsKMC4 = subset(TripsNorm, KMCTrips$cluster == 4)
+TripsKMC5 = subset(TripsNorm, KMCTrips$cluster == 5)
+TripsKMC6 = subset(TripsNorm, KMCTrips$cluster == 6)
+TripsKMC7 = subset(TripsNorm, KMCTrips$cluster == 7)
+TripsKMC8 = subset(TripsNorm, KMCTrips$cluster == 8)
+TripsKMC9 = subset(TripsNorm, KMCTrips$cluster == 9)
+TripsKMC10 = subset(TripsNorm, KMCTrips$cluster == 10)
+
+#Here all the values of columns will be summed with colSums and it will sorted and tail will be shown
+tail(sort(colMeans(TripsKMC1)))
+tail(sort(colMeans(TripsKMC2)))
+tail(sort(colMeans(TripsKMC3)))
+tail(sort(colMeans(TripsKMC4)))
+tail(sort(colMeans(TripsKMC5)))
+tail(sort(colMeans(TripsKMC6)))
+tail(sort(colMeans(TripsKMC7)))
+tail(sort(colMeans(TripsKMC8)))
+tail(sort(colMeans(TripsKMC9)))
+tail(sort(colMeans(TripsKMC10)))
+
+#Which cluster best fits the description "trips taken by female users on weekday evenings.
+#Ans- Cluster 10.
+
+#Which cluster best fits the description "leisurely (longer than average) afternoon trips taken on the weekends
+#Ans- CLuster8. In cluster 8, weekday is zero; means its actually weekend. Afternoon is also highest here
+
+
+#Running the clusters again with 20 
+set.seed(8000)
+KMCTrips20 = kmeans(TripsNorm, centers=20, iter.max=1000)
+
+#No. of elements in each Clsuter
+table(KMCTrips20$size)
