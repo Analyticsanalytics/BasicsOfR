@@ -1,3 +1,13 @@
 #Basic Function
 #Removing a variable (TotalDelay) from the dataset
 Airlines$TotalDelay = NULL
+
+#Copying a column to a df from another df. Here we copy sold column from FLipkart to descriptionText
+descriptionText$sold = Flipkart$sold
+
+
+#Normalizing the data using caret package. for each variable, the normalization process subtracts the mean and divides
+#by the standard deviation.In the normalized dataset, all of the variables should have mean 0 and standard deviation 1
+library(caret)
+preproc = preProcess(Flipkart)
+FlipNorm = predict(preproc, Flipkart)
