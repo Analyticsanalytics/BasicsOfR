@@ -1,0 +1,154 @@
+#Logistic Regression
+#CART using Cross Validation
+#Logistic Regression with Bag of Words
+
+
+Flipkart = read.csv(file = "C:\\Users\\admin\\Desktop\\Analytics Edge-2015\\Week10 Final Exam\\Flipkart.csv", stringsAsFactors=FALSE)
+str(Flipkart)
+
+names(Flipkart)
+
+
+#Converting the character varibales to into factor varis
+Flipkart$sold = as.factor(Flipkart$sold)
+Flipkart$condition = as.factor(Flipkart$condition)
+Flipkart$heel = as.factor(Flipkart$heel)
+Flipkart$style = as.factor(Flipkart$style)
+Flipkart$color = as.factor(Flipkart$color)
+Flipkart$material = as.factor(Flipkart$material)
+
+#Splitting the data
+set.seed(144)
+library(caTools)
+spl = sample.split(Flipkart$sold, 0.7)
+FlipkartTrain = subset(Flipkart, spl==TRUE)
+FlipkartTest = subset(Flipkart, spl==FALSE)
+
+#Making a Logistic Regression Model
+FlipkartGLM = glm(sold ~ biddable+startprice+condition+heel+style+color+material, data=FlipkartTrain, family=binomial)
+summary(FlipkartGLM)
+
+#Predicting on the test set
+FlipkartPred = predict(FlipkartGLM, newdata=FlipkartTest, type="response")
+
+#Confusion matrix with t-value of 0.5
+table(FlipkartTest$sold, FlipkartPred >0.5)
+table(FlipkartTest$sold)
+
+#Finding out the auc value
+library(ROCR)
+ROCRFlipkart = prediction(FlipkartPred, FlipkartTest$sold)
+auc = as.numeric(performance(ROCRFlipkart, "auc")@y.values)
+auc
+
+#ROCR Curve
+ROCRPerf= performance(ROCRFlipkart, "tpr", "fpr") 
+plot(ROCRPerf)
+plot(ROCRPerf, colorize=T)
+plot(ROCRPerf, colorize=T, print.cutoffs.at=seq(0,1,0.1), text.adj=c(-0.2,1.7))
+
+
+
+######Cross Validation###########
+
+set.seed(144)
+
+#We need to loads caret & e1071 packages to use cross-validation
+library(lattice)
+library(ggplot2)
+library(caret)
+library(e1071)
+library(rpart)
+
+#Deciding how many folds we wanna use. 10 folds we wanna use. CV means cross validation
+numFolds = trainControl(method="cv", number=10)
+
+#Possible values of cp parameters using expand.grid function
+cpGrid = expand.grid(.cp=seq(0.001, 0.05, 0.001)) #From 0.001 to 0.05 with increment of 0.001
+
+#We do cross-validation using "train" function.trControl is the output of train function
+train(sold ~ biddable+startprice+condition+heel+style+color+material, data=FlipkartTrain, method="rpart", trControl=numFolds, tuneGrid=cpGrid)
+#1st column of output gives the cp values. 2nd column give the accuracy of cp value. Accuracy starts lower, then increase and then decreses again
+#Cross validation gives cp=0.007. Lets use cv=0.007
+
+
+
+#We're creating a new CART model using this cp value instead of minbucket parameter
+FlipkartTreeCV = rpart(sold ~ biddable+startprice+condition+heel+style+color+material, data=FlipkartTrain, method="class", cp=0.007)
+FlipkartPredictCV = predict(FlipkartTreeCV, newdata=FlipkartTest, type="class")
+
+#What variable is used most frequently as a split in the tree
+library(rpart.plot)
+prp(FlipkartTreeCV)
+
+#Confusion matrix. Accuracy rate is 72%. It was 65.9% in our previous CART model
+table(FlipkartTest$sold, FlipkartPredictCV)
+#Cross validation helps us make sure we're choosing the good parameter value
+
+
+
+########BAG OF WORDS FOR TEXT VARIABLES#################
+library(NLP)
+library(tm)
+library(SnowballC)
+
+#Using tm function to pre-process the data
+corpus = Corpus(VectorSource(Flipkart$description))
+corpus = tm_map(corpus, content_transformer(tolower))
+corpus = tm_map(corpus, removePunctuation)
+corpus = tm_map(corpus, removeWords, stopwords("english"))
+corpus = tm_map(corpus, stemDocument)
+dtm = DocumentTermMatrix(corpus)
+
+#Unqiue terms in the dtm
+str(dtm)
+
+#Remove all terms that don't appear in at least 10% of documents in the corpus, storing the result in a new document term matrix called spdtm
+spdtm = removeSparseTerms(dtm, 0.90)
+
+#Unique terms in spdm
+str(spdtm)
+
+#Convert spdtm to a data frame called descriptionText
+descriptionText = as.data.frame(as.matrix(spdtm))
+
+#Which word stem appears the most frequently across all descriptions. ship with 8,353 numbers
+sort(colSums(descriptionText))
+
+
+#add a "D" in front of all the variable names in descriptionText
+names(descriptionText) = paste0("D", names(descriptionText))
+
+#Copy the variables of Flipkart into descriptionText dataframe
+descriptionText$sold = Flipkart$sold
+descriptionText$biddable = Flipkart$biddable
+descriptionText$startprice = Flipkart$startprice
+descriptionText$condition = Flipkart$condition
+descriptionText$heel = Flipkart$heel
+descriptionText$style = Flipkart$style
+descriptionText$color = Flipkart$color
+descriptionText$material = Flipkart$material
+summary(descriptionText)
+
+library(caTools)
+spl = sample.split(descriptionText$sold, SplitRatio=0.7)
+Train = subset(descriptionText, spl==TRUE)
+Test = subset(descriptionText, spl==FALSE)
+
+descriptionGLM = glm(sold ~ ., data=Train, family="binomial")
+summary(descriptionGLM)
+
+
+#training-set AUC of the new logistic regression model
+FlipkartPredTrain = predict(descriptionGLM, newdata=Train, type="response")
+library(ROCR)
+ROCRTrain = prediction(FlipkartPredTrain, Train$sold)
+auc = as.numeric(performance(ROCRTrain, "auc")@y.values)
+auc
+
+#Test set AUC of the Logistic Regression model
+FlipkartPredTest = predict(descriptionGLM, newdata=Test, type="response")
+library(ROCR)
+ROCRTest = prediction(FlipkartPredTest, Test$sold)
+aucTest = as.numeric(performance(ROCRTest, "auc")@y.values)
+aucTest 
