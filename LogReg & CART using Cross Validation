@@ -119,7 +119,7 @@ sort(colSums(descriptionText))
 #add a "D" in front of all the variable names in descriptionText
 names(descriptionText) = paste0("D", names(descriptionText))
 
-#Copy the variables of Flipkart into descriptionText dataframe
+#Copy rest of the variables of Flipkart into new descriptionText dataframe. We'll use descriptionText for further analysis
 descriptionText$sold = Flipkart$sold
 descriptionText$biddable = Flipkart$biddable
 descriptionText$startprice = Flipkart$startprice
