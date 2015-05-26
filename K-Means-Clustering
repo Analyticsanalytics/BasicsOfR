@@ -32,7 +32,7 @@ str(KMCTrips)
 #No. of elements in each Clsuter
 table(KMCTrips$size)
 
-
+#Creating different subsets for all the clusters
 TripsKMC1 = subset(TripsNorm, KMCTrips$cluster == 1)
 TripsKMC2 = subset(TripsNorm, KMCTrips$cluster == 2)
 TripsKMC3 = subset(TripsNorm, KMCTrips$cluster == 3)
@@ -44,7 +44,7 @@ TripsKMC8 = subset(TripsNorm, KMCTrips$cluster == 8)
 TripsKMC9 = subset(TripsNorm, KMCTrips$cluster == 9)
 TripsKMC10 = subset(TripsNorm, KMCTrips$cluster == 10)
 
-#Here all the values of columns will be summed with colSums and it will sorted and tail will be shown
+#Here we're taking means of columns of different clusters (colMeans = mean of coulmn), sort it and then show the top 6 values
 tail(sort(colMeans(TripsKMC1)))
 tail(sort(colMeans(TripsKMC2)))
 tail(sort(colMeans(TripsKMC3)))
