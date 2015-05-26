@@ -2,8 +2,23 @@
 #Removing a variable (TotalDelay) from the dataset
 Airlines$TotalDelay = NULL
 
+#Remove all the existing contents from R studio
+rm(list=ls())
+
+
 #Copying a column to a df from another df. Here we copy sold column from FLipkart to descriptionText
 descriptionText$sold = Flipkart$sold
+
+#Suppose there are no columns name in a dataset movie. Add the columns using colnames function
+colnames(movies) = c("ID", "Title", "ReleaseDate", "VideoReleaseDate", "IMDB", Thriller", "War", "Western")
+
+#add a "M" in front of all the variable names in movies. check ?paste0()
+names(movies) = paste0("M", names(movies))
+
+#Creating a dummy variable Popular in the movies dataset
+Nmovies$Popular = rep(0,nrow(movies))
+
+
 
 
 #Normalizing the data using caret package. for each variable, the normalization process subtracts the mean and divides
