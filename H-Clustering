@@ -1,4 +1,6 @@
 #H-Clustering
+#In hierarchical clustering, the clusters are formed by each data point starting in its own cluster using the eucledian
+#distance. H-Clust is not ideal for large data sets because it will have hard time figuring out the pairwise (euclidean distance )
 
 daily = read.csv("dailykos.csv")
 str(daily)
