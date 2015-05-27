@@ -7,6 +7,7 @@ rm(list=ls())
 
 ####ADDING DIFFERENT TIME VARIABLES IN THE DATASET
 #Suppose the time format in Airlines is like this "2015-05-26 21:45:32". We can add the time variables using the strptime() function of PubDate
+#Here we've used "%Y-%m-%d %H:%M:%S" bcz date is currently in this format
 Airlines$PubDate = strptime(Airlines$PubDate, "%Y-%m-%d %H:%M:%S")
 
 #Now add the variables weekday, Hour & Month in the dataset
