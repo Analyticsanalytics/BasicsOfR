@@ -5,6 +5,14 @@ Airlines$TotalDelay = NULL
 #Remove all the existing contents from R studio
 rm(list=ls())
 
+#Suppose the time format in Airlines is like this "2015-05-26 21:45:32". We can add the time variables using the strptime() function of PubDate
+Airlines$PubDate = strptime(Airlines$PubDate, "%Y-%m-%d %H:%M:%S")
+
+#Now add the variables weekday, Hour & Month in the dataset
+Airlines$Weekday = Airlines$PubDate$wday
+Airlines$Hour = Airliness$PubDate$hour
+Airlines$Month = Airlines$PubDate$mon
+
 
 #Copying a column to a df from another df. Here we copy sold column from FLipkart to descriptionText
 descriptionText$sold = Flipkart$sold
