@@ -5,6 +5,7 @@ Airlines$TotalDelay = NULL
 #Remove all the existing contents from R studio
 rm(list=ls())
 
+####ADDING DIFFERENT TIME VARIABLES IN THE DATASET
 #Suppose the time format in Airlines is like this "2015-05-26 21:45:32". We can add the time variables using the strptime() function of PubDate
 Airlines$PubDate = strptime(Airlines$PubDate, "%Y-%m-%d %H:%M:%S")
 
