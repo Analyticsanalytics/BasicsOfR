@@ -20,9 +20,9 @@ qplot(data=reddit, x=age.range)
 ##Or this
 levels(Airlines$age.range) = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above")
 qplot(data=Airlines, x=age.range)
-#Or this. Here Ordered=T, it should be in that order as in levels
+#Or this. Here Ordered=T, it should be in that order as in levels and use ggplot instead of qplot
 Airlines$age.range = factor(Airlines$age.range, level = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above", ordered=T))
-qplot(data=Airlines, x=age.range)
+ggplot(aes(x=age.range), data=Airlines) + geom_histogram + scale_x_discrete(breaks = 1:31)
 
 
 
