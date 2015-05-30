@@ -8,8 +8,21 @@ Airlines[Airlines$TotalDelay >= 5 & Airlines$TimeTaken < 10, ]
 #Flights with TotalDelay of less than 6 hours and TimeTaken more than 10 hours
 subset(Airlines, TotalDelay < 6 & TimeTaken > 8)
 
+##Ordered Factor###
 #Checking the levels of factor variable age.range
 levels(Airlines$age.range)
+library(ggplot2)
+qplot(data=Airlines, x=age.range) #Suppose the histogram is not in the ordered format
+
+#We can make the graph in ordered format using this
+Airlines$age$range = ordered(Airlines$age.range, level = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above"))
+qplot(data=reddit, x=age.range)
+##Or this
+levels(Airlines$age.range) = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above")
+qplot(data=Airlines, x=age.range)
+
+
+
 
 #Removing a variable (TotalDelay) from the dataset
 Airlines$TotalDelay = NULL
@@ -17,7 +30,7 @@ Airlines$TotalDelay = NULL
 #Remove all the existing contents from R studio
 rm(list=ls())
 
-####ADDING DIFFERENT TIME VARIABLES IN THE DATASET
+####Deriving TIME VARIABLES IN THE DATASET FROM DATE VARIABLE
 #Suppose the time format in Airlines is like this "2015-05-26 21:45:32". We can add the time variables using the strptime() function of PubDate
 #Here we've used "%Y-%m-%d %H:%M:%S" bcz date is currently in this format
 Airlines$PubDate = strptime(Airlines$PubDate, "%Y-%m-%d %H:%M:%S")
@@ -26,6 +39,7 @@ Airlines$PubDate = strptime(Airlines$PubDate, "%Y-%m-%d %H:%M:%S")
 Airlines$Weekday = Airlines$PubDate$wday
 Airlines$Hour = Airliness$PubDate$hour
 Airlines$Month = Airlines$PubDate$mon
+
 
 
 #Copying a column to a df from another df. Here we copy sold column from FLipkart to descriptionText
