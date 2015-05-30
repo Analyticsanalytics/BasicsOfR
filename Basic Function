@@ -8,6 +8,9 @@ Airlines[Airlines$TotalDelay >= 5 & Airlines$TimeTaken < 10, ]
 #Flights with TotalDelay of less than 6 hours and TimeTaken more than 10 hours
 subset(Airlines, TotalDelay < 6 & TimeTaken > 8)
 
+#Checking the levels of factor variable age.range
+levels(Airlines$age.range)
+
 #Removing a variable (TotalDelay) from the dataset
 Airlines$TotalDelay = NULL
 
