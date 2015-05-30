@@ -1,7 +1,9 @@
 #Basic Function
 
-#Flights with TotalDelay of more than 5 hours and TimeTaken less than 10 hours
-subset(Airlines, TotalDelay > 5 & TimeTaken < 10)
+#Flights with TotalDelay of more than or equal to 5 hours and TimeTaken less than 10 hours
+subset(Airlines, TotalDelay >= 5 & TimeTaken < 10)
+### OR we can use the below code for same
+Airlines[Airlines$TotalDelay >= 5 & Airlines$TimeTaken < 10, ]
 
 #Flights with TotalDelay of less than 6 hours and TimeTaken more than 10 hours
 subset(Airlines, TotalDelay < 6 & TimeTaken > 8)
