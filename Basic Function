@@ -1,5 +1,8 @@
 #Basic Function
 
+#How many TotalDelay are actually zero. It will show values in T & F
+summary(Airlines$TotalDelay > 0)
+
 #Flights with TotalDelay of more than or equal to 5 hours and TimeTaken less than 10 hours
 subset(Airlines, TotalDelay >= 5 & TimeTaken < 10)
 ### OR we can use the below code for same
