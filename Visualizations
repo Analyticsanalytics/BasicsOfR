@@ -51,7 +51,8 @@ tapply(pf$friend_count, pf$gender, median)
 ggplot(aes(x = friend_count), data = pf) + geom_histogram(binwidth = 25)+ scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50))
 
 
-#If we take direct log of friend_count, minimum in summary becomes negative infinity since log10 of 0 is inf.So, we've added 1 in the friend_count so that minm wont be zero. We'll check the plot using both log10 & sqrt
+#If we take direct log of friend_count, minimum in summary becomes negative infinity since log10 of 0 is inf.So, we've added 1 in the friend_count so that minm wont be zero.
+#We'll check the plot using both log10 & sqrt
 summary(log(pf$friend_count))
 summary(log(pf$friend_count + 1))
 ggplot(aes(x = friend_count), data = pf) + geom_histogram() + scale_x_log10()
