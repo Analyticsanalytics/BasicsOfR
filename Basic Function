@@ -1,5 +1,7 @@
 #Basic Function
 
+#args function give the argument of any function
+args(geom_line)
 #How many TotalDelay are actually zero. It will show values in T & F
 summary(Airlines$TotalDelay > 0)
 
