@@ -10,8 +10,15 @@ subset(Airlines, TotalDelay >= 5 & TimeTaken < 10)
 ### OR we can use the below code for same
 Airlines[Airlines$TotalDelay >= 5 & Airlines$TimeTaken < 10, ]
 
-#Flights with TotalDelay of less than 6 hours and TimeTaken more than 10 hours
-subset(Airlines, TotalDelay < 6 & TimeTaken > 8)
+#Flights with TotalDelay of less than 6 hours OR TimeTaken more than 10 hours
+subset(Airlines, TotalDelay < 6 | TimeTaken > 8)
+
+There so many missing values in the Airlines df. we can only available values using complete. cases
+good = comple.cases(Airlines) #Taking logical values of missing & available values (T/F)
+Airlines[good][1:20,] #Getting only available values, 1 to 20 columns and all the rows. It will remove rows with NA values 
+
+
+
 
 ##MAKING ORDERED FACTORS###
 #Checking the levels of factor variable age.range
