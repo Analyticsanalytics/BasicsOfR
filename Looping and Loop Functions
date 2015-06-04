@@ -1,0 +1,35 @@
+###LOOPING###
+if, else: testing a condition
+
+for: execute a loop a fixed number of times
+
+while: execute a loop while a condition is true
+
+repeat: execute an infinite loop
+
+break: break the execution of a loop
+
+next: skip an interation of a loop
+
+return: exit a function
+
+
+###LOOP FUNCTIONS#######
+lapply: Loop over a list and evaluate a function on each element. lapply returns a
+list regardless of class of data table x.
+
+lapply(x, mean or any other fn) #where x is a list. 
+
+
+
+sapply: Same as lapply but try to simplify the result.
+sapply(x, mean or any other fn) #where x is a list
+
+apply: Apply a function over the margins of an array. It is mostly applied on arrays
+and/or matrices
+
+
+tapply: Apply a function over subsets of a vector
+
+
+mapply: Multivariate version of lapply
