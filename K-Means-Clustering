@@ -17,7 +17,7 @@ TripsNorm = predict(preproc, Trips)
 max(TripsNorm$Duration)
 
 
-#Kmeans function takes three arguement, input we're trying to cluster (TripsNorm) here), no. of clusters(5 here) and
+#Kmeans function takes three arguement, input we're trying to cluster (TripsNorm) here), no. of clusters(10 here) and
 #maximum no. of iterations. we've chosen 1000 iterations
 set.seed(5000)
 KMCTrips = kmeans(TripsNorm, centers=10, iter.max=1000)
