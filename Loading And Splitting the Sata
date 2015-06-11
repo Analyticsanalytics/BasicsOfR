@@ -3,7 +3,7 @@
 #We can either drop file in the dir or create a path and read 
 Airlines = read.csv(file = "C:\\Users\\admin\\Desktop\\AirlineDelay.csv")
 
-#Reading directly from the csv
+#Reading directly from directory
 Airlines = read.csv("AirlinesDelay.csv")
 
 #Use stringsAsFac=F if there are alot of text file to read
