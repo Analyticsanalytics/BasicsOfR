@@ -13,7 +13,7 @@ Airlines[Airlines$TotalDelay >= 5 & Airlines$TimeTaken < 10, ]
 #Flights with TotalDelay of less than 6 hours OR TimeTaken more than 10 hours
 subset(Airlines, TotalDelay < 6 | TimeTaken > 8)
 
-There so many missing values in the Airlines df. we can only available values using complete. cases
+There so many missing values in the Airlines df. we can get only available values using "complete. cases"
 good = comple.cases(Airlines) #Taking logical values of missing & available values (T/F)
 Airlines[good][1:20,] #Getting only available values, 1 to 20 columns and all the rows. It will remove rows with NA values 
 
@@ -26,12 +26,12 @@ levels(Airlines$age.range)
 library(ggplot2)
 qplot(data=Airlines, x=age.range) #Suppose the histogram is not in the ordered format
 
-#We can make the graph in ordered format using this
+#We can make the histogram in ordered format using this
 Airlines$age$range = ordered(Airlines$age.range, level = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above"))
-qplot(data=reddit, x=age.range)
+ggplot(aes(x=age.range), data=Airlines) + geom_histogram()
 ##Or this
 levels(Airlines$age.range) = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above")
-qplot(data=Airlines, x=age.range)
+ggplot(aes(x=age.range), data=Airlines) + geom_histogram()
 #Or this. Here Ordered=T, it should be in that order as in levels and use ggplot instead of qplot
 Airlines$age.range = factor(Airlines$age.range, level = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above", ordered=T))
 ggplot(aes(x=age.range), data=Airlines) + geom_histogram()
