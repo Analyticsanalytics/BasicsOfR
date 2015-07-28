@@ -1,5 +1,9 @@
 #Basic Function
 
+#Checking if there is any missing element in the dataset
+length(Dataset[is.na(Dataset)])
+
+
 #args function give the argument of any function
 args(geom_line)
 #How many TotalDelay are actually zero. It will show values in T & F
