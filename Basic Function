@@ -4,6 +4,10 @@
 length(Dataset[is.na(Dataset)])
 
 
+#Making the correlation of all but one (Destination, it's categorical) variables
+cor(subset(Airlines, select=-Destination))
+
+
 #args function give the argument of any function
 args(geom_line)
 #How many TotalDelay are actually zero. It will show values in T & F
