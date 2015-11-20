@@ -1,7 +1,8 @@
 
 1) Uploading the data
 2) Cleaning the data
-        Checking NA values. Run imputation or remove or replace NAs with mean or zero.
+        Checking NA values. Run imputation or remove or replace NAs with mean or zero
+        Histogram of quantitative variables
         Checking Outliars and cieling & flooring maxmimum & minimum values. Treatment?
         Checking classes of variables
         
