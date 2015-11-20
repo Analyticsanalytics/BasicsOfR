@@ -12,7 +12,11 @@ colSums(is.na(train)) OR sapply(train, function(x) sum(is.na(x)))
 M <- sapply(train, function(x) sum(is.na(x)))
 M[M>0]
 
-
+#####   DRAWING MUPLTIPLE HISTOGRAMS OF NUMERICAL VALUES
+par(mfrow=c(2, 2))        #Taking two rows & two columns
+for (i in 6:9) {           #Taking 6th to 9th columns since they're numerical
+  hist(train[,i], main=colnames[i], probability=TRUE, col="gray", border="white")
+}
 
 
 ##Checking the classes of all the variables in a dataset
