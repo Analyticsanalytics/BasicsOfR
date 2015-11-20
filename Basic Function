@@ -21,6 +21,11 @@ for (i in 6:9) {           #Taking 6th to 9th columns since they're numerical
 
 
 #####   DRAWING MUPLTIPLE BOXPLOTS OF NUMERICAL VALUES   ########
+par(mfrow=c(2, 2))
+for (i in 6:9) {
+  boxplot(train[,i], main=colnames[i], probability=TRUE, col="gray", border="black",  horizontal=TRUE)
+}
+###OR WE can use below script
 boxplot(train[,6:9], horizontal=TRUE, main="Crime Rates in US") #For multiple variables
 boxplot(train$Field9, horizontal=TRUE) #For single variable
 
