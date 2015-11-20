@@ -18,6 +18,8 @@ M[M>0]
 ##Checking the classes of all the variables in a dataset
 sapply(train, function (x) class(x))
 
+#Making comparison plots for multiple numerical variables
+pairs(train[,6:9]) #Here we're making plots for 6th to 9th variables
 
 #Making the correlation of all but one (Destination, it's categorical) variables
 cor(subset(Airlines, select=-Destination))
