@@ -18,7 +18,8 @@ for (i in 6:9) {           #Taking 6th to 9th columns since they're numerical
   hist(train[,i], main=colnames[i], probability=TRUE, col="gray", border="white")
 }
 
-
+#Alternatively, we can use individual plots like this
+plot(Auto$displacement, main="Displacement", col="red", type="p")
 
 #####   DRAWING MUPLTIPLE BOXPLOTS OF NUMERICAL VALUES   ########
 par(mfrow=c(2, 2))
