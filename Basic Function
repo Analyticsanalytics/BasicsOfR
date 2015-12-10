@@ -1,5 +1,6 @@
 #Basic Function
-
+Remove all the objects from R environment
+rm(list=ls())
 
 ##############   TREATMENT OF MISSING VALUES   ###############################
 #Checking if there is any missing element in the dataset
