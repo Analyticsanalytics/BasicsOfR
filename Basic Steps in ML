@@ -7,6 +7,23 @@
         Checking classes of variables
         
 
-
-
 Log & exponentials are taken for skewed values.
+
+
+################  AIC & Model Selection in Logistic Regression   ####################
+AIC for Logistic Regression:- Akaike information criterian. AIC is founded on information theory: it offers a relative estimate of
+the information lost when a given model is used to represent the process that generates the data. In doing so, it deals with the 
+trade-off between the goodness of fit of the model and the complexity of the model. A model with minimum AIC is most preferred
+
+Hence AIC rewards goodness of fit (as assessed by the likelihood function), but it also includes a penalty that is an increasing function
+of the number of estimated parameters. The penalty discourages overfitting (increasing the number of parameters in the model almost always
+improves the goodness of the fit).
+
+To test the model:-
+  1) We make a confusion matrix and check the error rate
+  2) We can look at AIC of the model and compare it with the standard mean error
+  3) We can make ROCR curve and look at AUC
+  4)
+
+
+
