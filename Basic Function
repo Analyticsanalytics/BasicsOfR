@@ -111,10 +111,26 @@ names(movies) = paste0("M", names(movies))
 Nmovies$Popular = rep(0,nrow(movies))
 
 
-
-
 #Normalizing the data using caret package. for each variable, the normalization process subtracts the mean and divides
 #by the standard deviation.In the normalized dataset, all of the variables should have mean 0 and standard deviation 1
 library(caret)
 preproc = preProcess(Flipkart)
 FlipNorm = predict(preproc, Flipkart)
+
+############# SPLITTING THE DATA INTO TRAIN & TEST SET ######################
+Read the file:-Airlines = read.csv(file = "C:\\Users\\AirlineDelay.csv"). Use stringAsFactors=F if there is a lot of text data
+•	Splitting dataset which has continuousdependant variables
+spl=sample(nrow(Airlines),0.7*nrow(Airlines)) 
+AirlinesTrain = Airlines[spl,]
+AirlinesTest = Airlines[-spl,]
+
+•	Splitting dataset which has categorical dependent variables
+split = sample.split(quality$PoorCare, SplitRatio = 0.75) 
+split #We can see that split has been divided into T & F values
+qualityTrain = subset(quality, split == TRUE) #traning set
+qualityTest = subset(quality, split == FALSE) #testing set
+
+•	Splitting the data using another method
+NewsTrain1 = news[1:6532, ]
+NewsTest1 = news[6533:8402, ]
+
