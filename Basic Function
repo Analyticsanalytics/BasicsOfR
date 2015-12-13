@@ -138,3 +138,14 @@ qualityTest = subset(quality, split == FALSE) #testing set
 NewsTrain1 = news[1:6532, ]
 NewsTest1 = news[6533:8402, ]
 
+
+########      LUBRIDATE DATE EXTRACTION       ################
+library(lubridate)
+mtrain$Date = ymd(mtrain$Date) #ymd bcs date is in 2014-4-23 format. We use mdy if it is 4-23-2014 format and so on. We also use
+ymd_hms if there are hour, minutes and seconds
+
+mtrain$WeekNum = week(mtrain$Date)
+mtrain$Month = month(mtrain$Date)
+mtrain$Day = day(mtrain$Date)
+mtrain$year = year(mtrain$Date)
+mtrain$hour = hour(mtrain$Date)
