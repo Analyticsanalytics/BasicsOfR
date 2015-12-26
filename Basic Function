@@ -129,6 +129,7 @@ AirlinesTrain = Airlines[spl,]
 AirlinesTest = Airlines[-spl,]
 
 •	Splitting dataset which has categorical dependent variables
+library(caTools)
 split = sample.split(quality$PoorCare, SplitRatio = 0.75) 
 split #We can see that split has been divided into T & F values
 qualityTrain = subset(quality, split == TRUE) #traning set
