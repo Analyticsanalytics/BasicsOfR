@@ -61,7 +61,7 @@ subset(Airlines, TotalDelay < 6 | TimeTaken > 8)
 
 There so many missing values in the Airlines df. we can get only available values using "complete. cases"
 good = comple.cases(Airlines) #Taking logical values of missing & available values (T/F)
-Airlines[good][1:20,] #Getting only available values, 1 to 20 columns and all the rows. It will remove rows with NA values 
+Airlines[good][,1:20] #Getting only available values, 1 to 20 columns and all the rows. It will remove rows with NA values 
 
 
 
