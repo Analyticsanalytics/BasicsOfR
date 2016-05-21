@@ -1,5 +1,57 @@
+
 #Loading and splitting the data
 
+
+###########   Downloading and Reading csv file from net  #######################
+
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv"
+download.file(fileUrl,destfile="C:/Users/SHOAIL/Documents/cameras.csv")
+list.files("C:/Users/SHOAIL/Documents")
+camera = read.csv("cameras.csv")
+
+
+################  Reading Excel files in R from internet   ####################
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.xlsx"
+download.file(fileUrl,destfile="C:/Users/SHOAIL/Documents/cameras.xlsx")
+library(xlsx)
+data2 = read.xlsx("Baltimore1.xlsx", header=T, sheetIndex=1)
+
+
+################# Reading XML files in R from internet###########################
+library(XML)
+fileUrl <- "http://www.w3schools.com/xml/simple.xml"
+doc <- xmlTreeParse(fileUrl,useInternal=TRUE)  #UseInternal true means getting all the nodes inside of file
+rootNode <- xmlRoot(doc)  #Rootnode basically wraps the xml document
+xmlName(rootNode)   #Accessing the name of rootnote
+names(rootNode)     #What variables (names) are there in the xml document
+
+xmlSApply(rootNode,xmlValue)  #Getting all the values & texts in xml file using SApply
+
+xpathSApply(rootNode,"//name",xmlValue) #Getting all the nodes corresponding to name
+xpathSApply(rootNode,"//price",xmlValue)  #Getting all the nodes corresponding to price
+
+
+#Reading another file
+fileUrl <- "http://espn.go.com/nfl/team/_/name/bal/baltimore-ravens"
+doc <- htmlTreeParse(fileUrl,useInternal=TRUE)
+scores <- xpathSApply(doc,"//li[@class='score']",xmlValue) #Getting score value. Here li means check if list and return xmlvalue
+teams <- xpathSApply(doc,"//li[@class='team-name']",xmlValue) #Getting team-name value
+scores
+#More info on XML is here  http://www.stat.berkeley.edu/~statcur/Workshop2/Presentations/XML.pdf
+
+
+################ Reading data from JSON file from net  ###########################
+
+library(jsonlite)
+jsonData <- fromJSON("https://api.github.com/users/TheJuniorLebowski/repos")
+names(jsonData) #Looking at all the columns of 
+jsonData$name #Accessing the elemenets of names column
+names(jsonData$owner)
+jsonData$owner$login
+# More info on jsonlite   http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/
+
+
+################Reading data from local computer   #################################
 #We can either drop file in the dir or create a path and read 
 Airlines = read.csv(file = "C:\\Users\\admin\\Desktop\\AirlineDelay.csv")
 
@@ -16,8 +68,9 @@ Airlines = read.table(file="clipboard", header=T, sep = "\t")
 #Reading data directly from a website
 Airlines = read.table("http://files.Airlinesgroup.org/datasets/AirlinesDelay/ml-100k/u.item", header=FALSE, sep="|", quote="\"")
 
-#########Splitting the data
-#Data here is split using indexes because dependent var is continous here.The sample.split function is typically used to split data with a categorical dependent variable
+#########      Splitting the data     ################################################
+#Data here is split using indexes because dependent var is continous here.The sample.split function is typically used to split
+#data with a categorical dependent variable
 spl = sample(nrow(Airlines), 0.7*nrow(Airlines))
 AirlinesTrain = Airlines[spl,]
 AirlinesTest = Airlines[-spl,]
@@ -35,7 +88,8 @@ predictTest = predict(AirlinesLM, newdata=AirlinesTest)
 
 #Finding out SSE & SST
 SSE = sum((AirlinesTest$TotalDelay - predictTest)^2) #1st argument is actual value. 2nd argu is predicted value
-SST = sum((AirlinesTest$TotalDelay - mean(AirlinesTrain$TotalDelay))^2) #1st argu is actual value. 2nd argument is baseline or average price
+SST = sum((AirlinesTest$TotalDelay - mean(AirlinesTrain$TotalDelay))^2) #1st argu is actual value. 2nd argument is baseline 
+#or average price
 SSE
 SST
 
