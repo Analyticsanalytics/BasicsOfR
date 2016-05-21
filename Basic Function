@@ -150,3 +150,11 @@ mtrain$Month = month(mtrain$Date)
 mtrain$Day = day(mtrain$Date)
 mtrain$year = year(mtrain$Date)
 mtrain$hour = hour(mtrain$Date)
+
+###################     Using swirl package for R     ####################
+install.packages("swirl")
+packageVersion("swirl")
+library(swirl)
+install_from_swirl("Getting and Cleaning Data")
+swirl()
+install_from_swirl("R Programming")
