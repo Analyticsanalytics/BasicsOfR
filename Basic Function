@@ -5,6 +5,14 @@ rm(list=ls())
 #Create a new variable mpg01 in df Auto which includes 1 if the value of mpg is greater than its median and zero otherwise
 Auto$mpg01 = ifelse(Auto$mpg > median(Auto$mpg), 1, 0)
 
+#Merging by two or more diff columns
+zz = merge(train, test, by =c("ccid", "conno", "web_top_n"))
+
+#Removing duplicated observations from a df.
+data1 = data[!duplicated(data),] #OR WE CAN USE
+data1 = unique(data)
+
+
 ##############   TREATMENT OF MISSING VALUES   ###############################
 #Checking if there is any missing element in the dataset
 length(Dataset[is.na(Dataset)])
