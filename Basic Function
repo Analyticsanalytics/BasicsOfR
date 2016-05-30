@@ -170,3 +170,15 @@ library(swirl)
 install_from_swirl("Getting and Cleaning Data")
 swirl()
 install_from_swirl("R Programming")
+
+
+###################     Outlier Treatment : Percentile Capping   ####################
+
+df is dataset here
+pcap <- function(x){
+  for (i in which(sapply(x, is.numeric))) {
+    quantiles <- quantile( x[,i], c(.05, .95 ), na.rm =TRUE)
+    x[,i] = ifelse(x[,i] < quantiles[1] , quantiles[1], x[,i])
+    x[,i] = ifelse(x[,i] > quantiles[2] , quantiles[2], x[,i])}
+  x}
+df1 = pcap(df) #df1 will have no outliers.
