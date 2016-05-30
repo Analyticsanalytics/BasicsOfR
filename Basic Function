@@ -5,6 +5,10 @@ rm(list=ls())
 #Create a new variable mpg01 in df Auto which includes 1 if the value of mpg is greater than its median and zero otherwise
 Auto$mpg01 = ifelse(Auto$mpg > median(Auto$mpg), 1, 0)
 
+#If values of power are greater than 300k, cap them at 300k. Else leave em as it is.
+df1$Power = ifelse(df1$Power > 300000, 300000, df1$Power)
+
+
 #Merging by two or more diff columns
 zz = merge(train, test, by =c("ccid", "conno", "web_top_n"))
 
