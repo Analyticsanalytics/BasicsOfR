@@ -1,10 +1,16 @@
 
 1) Uploading the data
-2) Cleaning the data
-        Checking NA values. Run imputation or remove or replace NAs with mean or zero
-        Histogram of quantitative variables
-        Checking Outliars and cieling & flooring maxmimum & minimum values. Treatment?
-        Checking classes of variables
+2) Checking NA values. Run imputation or remove or replace NAs with mean or zero
+3) Checking Outliars and cieling & flooring maxmimum & minimum values. Capping them with 95/5th percentiles. If too many values are
+     in 95th/5th percentile, then choosing 96th/4th or higher/lower percentile accordingly
+4) Checking classes of variables
+5) Recoding of the variables (Factor or something else)
+6) Exploratory Data Analysis
+       Significance relationship be/w dependent & indepedent variables
+       Plotting simple statistic values such mean, median, SD etc
+       Histogram of quantitative variables
+       Checking the assumptions of the related to the technique. FOr linear Reg, check normal distribution of response
+       determining relationships among the explanatory variables
         
 
 Log & exponentials are taken for skewed values.
