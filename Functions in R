@@ -1,0 +1,73 @@
+
+##########   R Programming   #################
+
+x = c("a", "b", "c", "d")
+for (i in 1:4){
+  print(x[i])
+  
+}
+
+#Making a function which adds two numbers
+add2 = function(y,z){
+  y+z
+  
+}
+add2(5,4)
+
+
+##Making a function which returns a number greater than 10
+above10 = function(x){
+  use = x> 10
+  x[use]
+}
+above10(1:15) #It will return all the values greater than 10
+
+
+above = function(x, n){
+  use = x> n
+  x[use]
+}
+x = 5:14
+above(x,10) #HEre n is 10
+
+
+
+### Making a function which produces the mean of columns of a dataframe
+
+columnmean = function(x){
+  nc = ncol(x)
+  means1 = numeric(nc)
+  for(i in 1:nc){
+    means1[i] = mean(x[,i], na.rm = T)
+    
+   }
+   means1
+}
+
+columnmean(airquality)
+
+###########Making another funciton
+
+make.power = function(n){
+   pow = function(x){
+     x^n
+   }
+  pow
+}
+
+cube = make.power(3)
+cube(4) #It will give 64
+square = make.power(2)
+square(5)  #It will return 25
+
+####
+lapply: Loop over a list and evaluate a function on each element. It always returns a list regardless of class of the input.
+sapply: Same as lapply but try to simplify the result
+apply: Apply a function over the margins of an array
+tapply: Apply a function over subsets of a vector
+mapply: Multivariate version of lapply
+
+##  HOW TO RUN SWIRL IN R
+library(swirl)
+install_from_swirl("R Programming") #Or choose any other course
+swirl()
