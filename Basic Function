@@ -2,6 +2,9 @@
 Remove all the objects from R environment
 rm(list=ls())
 
+If rStudio is giving error: "Error in plot.new() : figure margins too large in r"
+par(mar=c(1,1,1,1))
+
 #Create a new variable mpg01 in df Auto which includes 1 if the value of mpg is greater than its median and zero otherwise
 Auto$mpg01 = ifelse(Auto$mpg > median(Auto$mpg), 1, 0)
 
