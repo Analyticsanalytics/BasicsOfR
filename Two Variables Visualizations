@@ -1,0 +1,78 @@
+
+#EDA with two variables, scatterplot, setting the limits, mean-line, percentile line, correlation line & dplyr package
+
+
+pf = read.csv(file="C:\\Users\\admin\\Desktop\\Udacity\\Exploring One Variable\\pseudo_facebook.tsv", sep="\t")
+library(ggplot2)
+
+#Making scatterplot with two variables
+ggplot(aes(x= age, y=friend_count), data=pf) + geom_point()
+
+#Limting our x-axis b/w 13 &  90
+ggplot(aes(x= age, y=friend_count), data=pf) + geom_point() + xlim(13,90)
+
+#Here alpha=1/20 means there will be one dot fro 20 observations. alpha is transparency parameter
+ggplot(aes(x= age, y=friend_count), data=pf) + geom_point(alpha=1/20) + xlim(13,90)
+
+#point removed with jitter. geom_jitter will give clearer picture of relation b/w friend count & age
+ggplot(aes(x= age, y=friend_count), data=pf) + geom_jitter(alpha=1/20) + xlim(13,90)
+
+#here we've changed the y-coordinate to square-root.
+ggplot(aes(x= age, y=friend_count), data= subset(pf, !is.na(age))) + geom_point(alpha=1/20) + xlim(13,90) + coord_trans(y= "sqrt")
+
+
+#scatterplot of age & friend_count with line for mean of friend_count(summary, fun.y=mean)
+ggplot(aes(x= age, y=friend_count), data= pf)+ geom_point(alpha=0.1, position=position_jitter(h=0), color = "orange") + 
+  xlim(13,90) + coord_trans(y= "sqrt") + geom_line(stat="summary", fun.y=mean)
+
+
+#It will create two line for male & female medians since line's color is based on gender
+ggplot(aes(x=age, y=friend_count), data = subset(pf, !is.na(gender))) +
+  geom_line(aes(color=gender), stat="summary", fun.y=median)
+  
+  
+#scatterplot with a line of mean and another line with 90% quantile summary line to the plot
+ggplot(aes(x= age, y=friend_count), data= pf)+ geom_point(alpha=0.1, position=position_jitter(h=0), color = "orange")+ xlim(13,90) + 
+  coord_trans(y= "sqrt") + 
+  geom_line(stat="summary", fun.y=mean) + 
+  geom_line(stat ="summary", fun.y=quantile, prob=0.9, linetype= 2, color="red")
+
+
+
+#Since we've so many outliers, we've limited only 95th percentile of of both variabs. We've also taken correlation line (lm)
+#For x variba (xlimit), lower limit is zero and upper limit is 95th percentile. same for ylim.
+ggplot(aes(x=www_likes_received, y=likes_received), data=pf) + geom_point() +
+  xlim(0, quantile(pf$www_likes_received, 0.95)) + 
+  ylim(0, quantile(pf$likes_received, 0.95)) +
+  geom_smooth(method="lm", color = "red")
+
+
+
+#Loading and using dplyr function for further analysis
+
+##Load the dplyr package for more analysis
+install.packages("dplyr")
+library(dplyr)
+
+#Most common used functions of dplyr
+# filter(), group_by(), mutate(), arrange(), summarise()
+#http://rstudio-pubs-static.s3.amazonaws.com/11068_8bc42d6df61341b2bed45e9a9a3bf9f4.html
+
+#Group the data by age and save in a new varia age_groups
+age_groups = group_by(pf, age)
+
+
+#Here we're are saving the summarized data in a new dataframe pf.fc. 
+#In this dataframe, we're taking 4 variables, age, frnd mean, frnd median,no. of elements (n) in each group
+pf.fc = summarise(age_groups,
+          friend_count_mean = mean(friend_count),
+          friend_count_median = median(friend_count),
+          n = n())
+
+head(pf.fc)
+
+#now lets arrange the nw df pf.fc by age
+pf.fc = arrange(pf.fc, age)
+
+#Making a line scatterplot using the new datafram with age & friend_count_mean variable
+ggplot(aes(x= age, y=friend_count_mean), data= subset(pf.fc)) +geom_line(color="red") + xlim(13,90)
