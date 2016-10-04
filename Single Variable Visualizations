@@ -1,0 +1,97 @@
+
+Histogram for one variable with break, limits, facet_wrap, face_grid, gridExtra, boxplot using coord_cartesian
+
+
+
+Link:- https://www.udacity.com/course/viewer#!/c-ud651/l-755618712/e-814098598/m-814098599
+######Chapter-3 EXPLORING ONE VARIABLE######################
+ANALYSING FACEBOOK DATA
+
+Removing the existing variables from the console
+rm(list=ls())
+
+#\t means tsv is tab separated file
+pf = read.csv(file="C:\\Users\\admin\\Desktop\\Udacity\\Exploring One Variable\\pseudo_facebook.tsv", sep="\t")
+str(pf)
+names(pf)
+
+#More on Facet http://www.cookbook-r.com/Graphs/Facets_(ggplot2)/
+
+#Plot for the friend count
+ggplot(aes(x = friend_count), data = pf) + geom_histogram()
+
+#Here we've limited friendcount to 1000 only. We can limit y-axis with scale_y_continuous. y_continuous for continuos values and scale_y_discrete for discrete values
+ggplot(aes(x = friend_count), data = pf) + geom_histogram() + scale_x_continuous(limits = c(0, 1000))
+
+#Dividing the x axis from 0 to 1000 with interval of 50.
+ggplot(aes(x = friend_count), data = pf) + geom_histogram(binwidth = 25) + scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50))
+
+#Dividing the histogram on the gender to check who has more friends by adding facet_wrap with tilde gender. It'll create 3 hists, male, femal and for NA values
+ggplot(aes(x = friend_count), data = pf) + geom_histogram(binwidth = 25) + scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50)) + facet_wrap(~gender)
+
+#Here Removing the NA values of gender so that there are only two histograms for M/F, not for NA values
+ggplot(aes(x = friend_count), data = subset(pf, !is.na(gender))) + geom_histogram() + scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50)) + facet_wrap(~gender)
+
+
+tapply(pf$friend_count, pf$gender, median)
+
+#As we see, friend_count is highly dispersed for 0-50.
+ggplot(aes(x = friend_count), data = pf) + geom_histogram(binwidth = 25)+ scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50))
+
+
+#If we take direct log of friend_count, minimum in summary becomes negative infinity since log10 of 0 is inf.So, we've added 1 in the friend_count so that minm wont be zero.
+#We'll check the plot using both log10 & sqrt
+summary(log(pf$friend_count))
+summary(log(pf$friend_count + 1))
+ggplot(aes(x = friend_count), data = pf) + geom_histogram() + scale_x_log10()
+ggplot(aes(x=friend_count), data=pf) + geom_histogram() + scale_x_sqrt()
+
+
+#We can show both the graph in same plot using gridExtra package. ncol=2 show both graph in two columns
+library(gridExtra)
+LogScale = ggplot(aes(x = friend_count), data = pf) + geom_histogram() + scale_x_log10()
+SqrtScale = ggplot(aes(x=friend_count), data=pf) + geom_histogram() + scale_x_sqrt()
+grid.arrange(LogScale, SqrtScale, ncol=2)
+
+#Frequency Polygon. With FP, we can compare two distributions at once (male, female here)
+ggplot(aes(x = friend_count), data = subset(pf, !is.na(gender))) +  geom_freqpoly(aes(color = gender), binwidth=20) + scale_x_continuous(limits = c(0, 1000), breaks = seq(0, 1000, 50))
+
+#Summary of friend_count for both male & female
+by(pf$friend_count, pf$gender, summary)
+
+#Creating a boxplot on the basis of gender. As we can see, there so many outliers. Lets adjust the codes
+ggplot(aes(x=gender, y = friend_count), data = subset(pf, !is.na(gender))) +  geom_boxplot()
+
+#We've adjusted Y-axis for better understanding of the boxplot
+ggplot(aes(x=gender, y = friend_count), data = subset(pf, !is.na(gender))) +  geom_boxplot() + scale_y_discrete(limits= c(0,1000))
+
+#Here we've used coord_cartesian so that boxplot will actually match with the summary of gender
+ggplot(aes(x=gender, y = friend_count), data = subset(pf, !is.na(gender))) +  geom_boxplot() + coord_cartesian(ylim= c(0,1000))
+
+
+
+
+#Now Exploring the tenure or since how long people are using Facebook. Here "color" determines color outline of plot. "FILL" determines the color of the area inside objects in a plot.
+ggplot(aes(x = tenure), data = pf) + geom_histogram(binwidth = 30, color ="black", fill ='#099DD9')
+
+
+#here we've divided tenure by 30 (tenure is in days). We've taken 0 to 110 as breaks at an interval of 12 since a year has 12 months. We've taken binwidth as 2.
+str(pf$tenure)
+pf$tenure = pf$tenure/30
+max(pf$tenure, na.rm=T)
+ggplot(aes(x = tenure), data = pf) + geom_histogram(binwidth = 2, color ="black", fill ='#099DD9') + scale_x_continuous( breaks = seq(0, 110, 12))
+
+
+#Here we've made tenure into years. There are now 7 years hence break is from 10 to 7 with interval of 1 year. We've takne binwidth as o.25 means 4 months. Most users are using Fb for least than 2 years as shown in the plot
+pf = read.csv(file="C:\\Users\\admin\\Desktop\\Udacity\\Exploring One Variable\\pseudo_facebook.tsv", sep="\t")
+library(ggplot2)
+ggplot(aes(x = tenure/365), data = pf) + geom_histogram(binwidth = .25, color = 'black', fill = '#F79420')+ scale_x_continuous( breaks = seq(1, 7, 1), limits=c(0,7))
+
+
+Giving appropriate names to x & y axes
+ggplot(aes(x = tenure/365), data = pf) + geom_histogram(binwidth = .25, color = 'black', fill = '#F79420')+ scale_x_continuous( breaks = seq(1, 7, 1), limits=c(0,7)) + xlab("Numbers of Yrs using Facebook") + ylab("Numbers of users in the sample data")
+
+
+Plotting the age variable. We can give discrete values to our scale x variable as well
+names(pf)
+ggplot(aes(x=age), data=pf) + geom_histogram(binwidth= 1, color="black", fill="#5760AB") + scale_x_discrete(breaks = seq(10, 110,5))
