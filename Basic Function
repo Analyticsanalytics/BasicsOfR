@@ -5,6 +5,11 @@ rm(list=ls())
 #If rStudio is giving error: "Error in plot.new() : figure margins too large in r"
 par(mar=c(1,1,1,1))
 
+#Counting how many unique elements are there column-wise. It will give only unique values. So if these values are less than the 
+# observations for a variable, means there are duplicate values in that column
+sapply(df, function(x) length(unique(x)))   #OR
+rapply(df,function(x) count(unique(x)))
+
 #Getting all the quantiles of a variables
 quantile(df$Prop_Balance, c(0.1,0.2, 0.3,0.4,0.5,0.6,0.7,0.8,0.9,1))
 
