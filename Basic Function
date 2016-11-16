@@ -13,6 +13,10 @@ rapply(df,function(x) length(unique(x)))
 # Delete multiple columns at once.
 df1 = df[, -c(1,2,4,10,11,14,15,17,18,21:24,31,32,42)]
 
+# Impute all the missing values with the mean
+df1$PPvD[is.na(df1$PPvD)] = mean(df1$PPvD, na.rm=TRUE)
+
+
 #Getting all the quantiles of a variables
 quantile(df$Prop_Balance, c(0.1,0.2, 0.3,0.4,0.5,0.6,0.7,0.8,0.9,1))
 
