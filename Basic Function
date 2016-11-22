@@ -34,10 +34,6 @@ prop.table(table(xx))
 #Create a new variable mpg01 in df Auto which includes 1 if the value of mpg is greater than its median and zero otherwise
 Auto$mpg01 = ifelse(Auto$mpg > median(Auto$mpg), 1, 0)
 
-#If values of power are greater than 300k, cap them at 300k. Else leave em as it is.
-df1$Power = ifelse(df1$Power > 300000, 300000, df1$Power)
-
-
 #Merging by two or more diff columns
 zz = merge(train, test, by =c("ccid", "conno", "web_top_n"))
 
@@ -57,21 +53,10 @@ colSums(is.na(train)) OR sapply(train, function(x) sum(is.na(x)))
 M <- sapply(train, function(x) sum(is.na(x)))
 M[M>0]
 
-#####   DRAWING MUPLTIPLE HISTOGRAMS OF NUMERICAL VALUES   ########
-par(mfrow=c(2, 2))        #Taking two rows & two columns
-for (i in 6:9) {           #Taking 6th to 9th columns since they're numerical
-  hist(train[,i], main=colnames[i], probability=TRUE, col="gray", border="white")
-}
-
 #Alternatively, we can use individual plots like this
 plot(Auto$displacement, main="Displacement", col="red", type="p")
 
 #####   DRAWING MUPLTIPLE BOXPLOTS OF NUMERICAL VALUES   ########
-par(mfrow=c(2, 2))
-for (i in 6:9) {
-  boxplot(train[,i], main=colnames[i], probability=TRUE, col="gray", border="black",  horizontal=TRUE)
-}
-###OR WE can use below script
 boxplot(train[,6:9], horizontal=TRUE, main="Crime Rates in US") #For multiple variables
 boxplot(train$Field9, horizontal=TRUE) #For single variable
 
@@ -101,7 +86,7 @@ Airlines[Airlines$TotalDelay >= 5 & Airlines$TimeTaken < 10, ]
 subset(Airlines, TotalDelay < 6 | TimeTaken > 8)
 
 There so many missing values in the Airlines df. we can get only available values using "complete. cases"
-good = comple.cases(Airlines) #Taking logical values of missing & available values (T/F)
+good = complete.cases(Airlines) #Taking logical values of missing & available values (T/F)
 Airlines[good][,1:20] #Getting only available values, 1 to 20 columns and all the rows. It will remove rows with NA values 
 
 
@@ -116,6 +101,7 @@ qplot(data=Airlines, x=age.range) #Suppose the histogram is not in the ordered f
 #We can make the histogram in ordered format using this
 Airlines$age$range = ordered(Airlines$age.range, level = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above"))
 ggplot(aes(x=age.range), data=Airlines) + geom_histogram()
+
 ##Or this
 levels(Airlines$age.range) = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above")
 ggplot(aes(x=age.range), data=Airlines) + geom_histogram()
@@ -123,13 +109,6 @@ ggplot(aes(x=age.range), data=Airlines) + geom_histogram()
 Airlines$age.range = factor(Airlines$age.range, level = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above", ordered=T))
 ggplot(aes(x=age.range), data=Airlines) + geom_histogram()
 
-
-
-#Removing a variable (TotalDelay) from the dataset
-Airlines$TotalDelay = NULL
-
-#Remove all the existing contents from R studio
-rm(list=ls())
 
 ####Deriving TIME VARIABLES IN THE DATASET FROM DATE VARIABLE
 #Suppose the time format in Airlines is like this "2015-05-26 21:45:32". We can add the time variables using the strptime() function of PubDate
