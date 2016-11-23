@@ -10,6 +10,8 @@ par(mar=c(1,1,1,1))
 sapply(df, function(x) length(unique(x)))   #OR
 rapply(df,function(x) length(unique(x)))
 
+train <- read.csv("train_loan.csv", na.strings = c(""," ",NA))
+
 # Delete multiple columns at once.
 df1 = df[, -c(1,2,4,10,11,14,15,17,18,21:24,31,32,42)]
 
