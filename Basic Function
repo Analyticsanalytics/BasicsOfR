@@ -5,6 +5,9 @@ rm(list=ls())
 #If rStudio is giving error: "Error in plot.new() : figure margins too large in r"
 par(mar=c(1,1,1,1))
 
+
+table(predicted= Pred, True=test$Delinquent)
+
 #Counting how many unique elements are there column-wise. It will give only unique values. So if these values are less than the 
 # observations for a variable, means there are duplicate values in that column
 sapply(df, function(x) length(unique(x)))   #OR
