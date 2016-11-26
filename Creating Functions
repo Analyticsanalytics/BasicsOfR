@@ -23,3 +23,19 @@ roll2 <- function(bones=1:20) {
   sum(dice)
 }
 roll2()  #It will work
+
+
+#Same function as above ones but with diff probability. Hereit sample the numbers one through five with probability 1/8
+# and the number 6 with probability 3/8.
+roll <- function() {
+die <- 1:6
+dice <- sample(die, size = 2, replace = TRUE,
+prob = c(1/8, 1/8, 1/8, 1/8, 1/8, 3/8))
+sum(dice)
+}
+
+
+
+
+
+
