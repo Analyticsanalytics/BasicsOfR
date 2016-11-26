@@ -1,0 +1,27 @@
+
+
+#Writing a code for a pair of dice (size=2) to ensure it runs the sum of the number on both the dice
+roll <- function() {
+  die <- 1:6
+  dice <- sample(die, size = 2, replace = TRUE)
+  sum(dice)   #Here the last line of the code ensures that the fucntion returns a value. thats why roll() returns a value.
+}
+roll()
+
+
+
+#Here we've created a function where we pick two things numbered from a jar and it gives the sum of the values.
+#Here the jar has numbers from 1 to 20 and we're picking just two numbers (size=2) with replacement (replace=TRUE)
+roll2 <- function(bones) {
+  dice <- sample(bones, size = 2, replace = TRUE)
+  sum(dice)
+}
+roll2()  #It will give an error because we have not specifie values for the bones. It'still empty.
+roll2(1:20) #This will work
+
+#We can mention the same function as like this but now we've fixed (20) how many numbered elements are there
+roll2 <- function(bones=1:20) {
+  dice <- sample(bones, size = 2, replace = TRUE)
+  sum(dice)
+}
+roll2()  #It will work
