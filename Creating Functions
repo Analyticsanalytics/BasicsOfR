@@ -8,8 +8,6 @@ roll <- function() {
 }
 roll()
 
-
-
 #Here we've created a function where we pick two things numbered from a jar and it gives the sum of the values.
 #Here the jar has numbers from 1 to 20 and we're picking just two numbers (size=2) with replacement (replace=TRUE)
 roll2 <- function(bones) {
