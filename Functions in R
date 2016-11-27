@@ -1,5 +1,5 @@
 
-##########   R Programming   #################
+##########   R Programming Swirl   #################
 
 x = c("a", "b", "c", "d")
 for (i in 1:4){
@@ -29,6 +29,14 @@ above = function(x, n){
 }
 x = 5:14
 above(x,10) #HEre n is 10
+
+#Write a function that give a remainder from a number & divisor. Initialize the divisor at2.
+remainder <- function(num, divisor=2) {
+  xx = num %% divisor
+  xx
+}
+remainder(7) #It will give 1
+remainder(17,3) #Here 3 is divisor so remainder would be 2
 
 
 
