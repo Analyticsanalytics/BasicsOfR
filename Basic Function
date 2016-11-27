@@ -5,6 +5,8 @@ rm(list=ls())
 #If rStudio is giving error: "Error in plot.new() : figure margins too large in r"
 par(mar=c(1,1,1,1))
 
+#Making a subset of only numerical variables.
+train_num <- train[sapply(train,is.numeric)]
 
 table(predicted= Pred, True=test$Delinquent)
 
