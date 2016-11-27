@@ -10,8 +10,8 @@ train_num <- train[sapply(train,is.numeric)]
 
 table(predicted= Pred, True=test$Delinquent)
 
-#Counting how many unique elements are there column-wise. It will give only unique values. So if these values are less than the 
-# observations for a variable, means there are duplicate values in that column
+#Counting how many unique elements are there column-wise. It will give only unique values. So if these values are less than
+ #the observations for a variable, means there are duplicate values in that column
 sapply(df, function(x) length(unique(x)))   #OR
 rapply(df,function(x) length(unique(x)))
 
@@ -115,13 +115,14 @@ ggplot(aes(x=age.range), data=Airlines) + geom_histogram()
 levels(Airlines$age.range) = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above")
 ggplot(aes(x=age.range), data=Airlines) + geom_histogram()
 #Or this. Here Ordered=T, it should be in that order as in levels and use ggplot instead of qplot
-Airlines$age.range = factor(Airlines$age.range, level = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or Above", ordered=T))
+Airlines$age.range = factor(Airlines$age.range, level = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65 or 
+  Above", ordered=T))
 ggplot(aes(x=age.range), data=Airlines) + geom_histogram()
 
 
 ####Deriving TIME VARIABLES IN THE DATASET FROM DATE VARIABLE
-#Suppose the time format in Airlines is like this "2015-05-26 21:45:32". We can add the time variables using the strptime() function of PubDate
-#Here we've used "%Y-%m-%d %H:%M:%S" bcz date is currently in this format
+#Suppose the time format in Airlines is like this "2015-05-26 21:45:32". We can add the time variables using the strptime()
+ # function of PubDate. Here we've used "%Y-%m-%d %H:%M:%S" bcz date is currently in this format
 Airlines$PubDate = strptime(Airlines$PubDate, "%Y-%m-%d %H:%M:%S")
 
 #Now add the variables weekday, Hour & Month in the dataset
@@ -197,5 +198,6 @@ pcap <- function(x){
     quantiles <- quantile( x[,i], c(.05, .95 ), na.rm =TRUE)
     x[,i] = ifelse(x[,i] < quantiles[1] , quantiles[1], x[,i])
     x[,i] = ifelse(x[,i] > quantiles[2] , quantiles[2], x[,i])}
-  x}
+  x
+}
 df1 = pcap(df) #df1 will have no outliers.
