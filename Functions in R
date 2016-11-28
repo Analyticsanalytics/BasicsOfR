@@ -37,7 +37,7 @@ remainder <- function(num, divisor=2) {
 }
 remainder(7) #It will give 1
 remainder(17,3) #Here 3 is divisor so remainder would be 2
-
+remainer(divisor=11, num=5) #It gives 5. It'll also work since we've expicitly mentioned all arguments
 
 
 ### Making a function which produces the mean of columns of a dataframe
