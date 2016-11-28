@@ -15,6 +15,9 @@ table(predicted= Pred, True=test$Delinquent)
 sapply(df, function(x) length(unique(x)))   #OR
 rapply(df,function(x) length(unique(x)))
 
+#CHeck how many classes are there in the dataset
+table(sapply(df2, function(x) class(x)))
+
 train <- read.csv("train_loan.csv", na.strings = c(""," ",NA))
 
 # Delete multiple columns at once.
