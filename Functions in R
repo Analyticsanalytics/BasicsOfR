@@ -40,6 +40,14 @@ remainder(17,3) #Here 3 is divisor so remainder would be 2
 remainer(divisor=11, num=5) #It gives 5. It'll also work since we've expicitly mentioned all arguments
 
 
+#Write a function which would take other in-built functions like mean, median, std. and give their values
+evaluate <- function(func, dat){
+  func(dat)
+}
+evaluate(median, c(1.4,2,3.6) #This will work
+
+
+
 ### Making a function which produces the mean of columns of a dataframe
 
 columnmean = function(x){
