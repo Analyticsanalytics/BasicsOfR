@@ -40,11 +40,18 @@ remainder(17,3) #Here 3 is divisor so remainder would be 2
 remainer(divisor=11, num=5) #It gives 5. It'll also work since we've expicitly mentioned all arguments
 
 
-#Write a function which would take other in-built functions like mean, median, std. and give their values
-evaluate <- function(func, dat){
-  func(dat)
-}
-evaluate(median, c(1.4,2,3.6) #This will work
+###################     Write a anonymized function which would take a built-in function and work ##########################
+  evaluate <- function(func, dat){
+     func(dat)
+  }
+  evaluate(median, c(1.4,2,3.6) #This will work
+
+   #Write a function which would add 1 to it and give the sum. Here x is anonimyzed fn. we create it on the go.
+   evaluate(function(x){x+1}, 6)
+
+  #Write a function which would return the 1st element of a c(8,4,0)
+  evaluate(function(x){x[1]}, c(8,4,0))
+###################################      END     ###########################################################################
 
 
 
