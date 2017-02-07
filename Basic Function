@@ -2,6 +2,9 @@
 Remove all the objects from R environment
 rm(list=ls())
 
+# Drop variables with the missing values more than 1
+df[, colSums(is.na(df)) > 1] = NULL
+
 #If rStudio is giving error: "Error in plot.new() : figure margins too large in r"
 par(mar=c(1,1,1,1))
 
