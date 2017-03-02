@@ -2,6 +2,9 @@
 Remove all the objects from R environment
 rm(list=ls())
 
+we can use ANCOVA (analysis of covariance) technique to capture association between continuous and categorical variables.
+
+
 # Drop variables with the missing values more than 1
 df[, colSums(is.na(df)) > 1] = NULL
 
