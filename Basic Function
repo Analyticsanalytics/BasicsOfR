@@ -179,7 +179,7 @@ NewsTrain1 = news[1:6532, ]
 NewsTest1 = news[6533:8402, ]
 
 
-########      LUBRIDATE DATE EXTRACTION       ################
+##################         LUBRIDATE DATE EXTRACTION       #####################
 library(lubridate)
 mtrain$Date = ymd(mtrain$Date) #ymd bcs date is in 2014-4-23 format. We use mdy if it is 4-23-2014 format and so on. We also use
 ymd_hms if there are hour, minutes and seconds
@@ -189,6 +189,19 @@ mtrain$Month = month(mtrain$Date)
 mtrain$Day = day(mtrain$Date)
 mtrain$year = year(mtrain$Date)
 mtrain$hour = hour(mtrain$Date)
+
+####################      strptime Date Extraction      ##################################
+df$date = strptime(df$date, "%m/%d/%Y %H:%M")   #Here date is mentioned in the format of 2/22/16 14:10.
+news$PubDate = strptime(news$PubDate, "%Y-%m-%d %H:%M:%S") #Here the date is mentioned in the format of 16-2-22 14:10
+df$Month = df$date$mon
+df$Year = df$date$year
+df$Weekday = df$date$wday
+df$Hour = df$date$hour
+df$Minutes = df$rdate$min
+
+
+
+
 
 ###################     Using swirl package for R     ####################
 install.packages("swirl")
