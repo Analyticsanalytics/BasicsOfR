@@ -200,7 +200,10 @@ df$Hour = df$date$hour
 df$Minutes = df$rdate$min
 
 
-
+####################      as.Date.factor Date Extraction      ##################################
+df$registerdate = as.Date.factor(df$registerdate, "%m/%d/%Y %H:%M")
+df$Month = as.integer(format(df$registerdate, "%m")
+df$Year = as.integer(format(df$registerdate, "%Y")  and so on for other labels
 
 
 ###################     Using swirl package for R     ####################
