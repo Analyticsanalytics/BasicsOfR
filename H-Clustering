@@ -5,12 +5,13 @@
 daily = read.csv("dailykos.csv")
 str(daily)
 
-#Find out eucledian distance b/w all the data points
+#Find out eucledian distance b/w all the data points. If we dont use any method, it will use complete linkage method
 distances = dist(daily, method="euclidean")
 
 #the Ward's method is a minimum variance method, which tries to find compact and spherical clusters.
 #it tries to minimize the variance within each cluster and the distance among clusters.
 #ward.D method considers centroid distance for clustering the components
+# We can also use "average", "complete", "single" or "centroid" distance method
 dailyClusters = hclust(distances, method="ward.D")
 
 #plotting the dendogram to choose no. of clusters
