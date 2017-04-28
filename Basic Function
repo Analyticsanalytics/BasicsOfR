@@ -4,6 +4,9 @@ rm(list=ls())
 
 we can use ANCOVA (analysis of covariance) technique to capture association between continuous and categorical variables.
 
+#CHange one of the labels of a variables
+levels(df$RR)[levels(df$RR) == "Recovery"] = "Chargeoff"
+
 
 # Drop variables with the missing values more than 1
 df[, colSums(is.na(df)) > 1] = NULL
