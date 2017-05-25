@@ -2,6 +2,12 @@
 Remove all the objects from R environment
 rm(list=ls())
 
+# Let’s create extra positive observations using SMOTE. We set perc.over = 100 to double the quantity of positive cases, and set 
+# perc.under=200 to keep half of what was created as negative cases.
+library(DMwR)
+train1 = SMOTE(Chargeoff_2 ~ ., train, perc.over = 100, perc.under=400)
+
+
 we can use ANCOVA (analysis of covariance) technique to capture association between continuous and categorical variables.
 
 #CHange one of the labels of a variables
