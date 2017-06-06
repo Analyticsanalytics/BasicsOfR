@@ -7,6 +7,9 @@ rm(list=ls())
 library(DMwR)
 train1 = SMOTE(Chargeoff_2 ~ ., train, perc.over = 100, perc.under=400)
 
+# We woudl like to keep only those rows of df1 which has DealId in the df2 column
+df3 = df1[df1$DealId %in% df2$DealId, ]
+
 
 we can use ANCOVA (analysis of covariance) technique to capture association between continuous and categorical variables.
 
