@@ -10,6 +10,9 @@ train1 = SMOTE(Chargeoff_2 ~ ., train, perc.over = 100, perc.under=400)
 # We woudl like to keep only those rows of df1 which has DealId in the df2 column
 df3 = df1[df1$DealId %in% df2$DealId, ]
 
+# month0_BA has missing value, then imputing the missing value with the values of column month1_BA
+df$month0_BA[is.na(df$month0_BA)] = df$month1_BA[is.na(df$month0_BA)]
+
 
 we can use ANCOVA (analysis of covariance) technique to capture association between continuous and categorical variables.
 
